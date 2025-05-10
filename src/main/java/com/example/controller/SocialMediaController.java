@@ -94,7 +94,7 @@ public class SocialMediaController {
 
 
 
-    
+
     // retrieve message by its id
     @GetMapping("messages/{messageId}")
     private ResponseEntity<?> getMessageById(@PathVariable Integer messageId){
@@ -118,12 +118,14 @@ public class SocialMediaController {
 
     // delete message with message id
     @DeleteMapping("/messages/{messageId}")
-    private ResponseEntity<?> deleteMessage(@PathVariable int messageId) {
-    try {
-        messageService.deleteMessage(messageId);
-        return ResponseEntity.ok(200); 
-    } catch (EmptyResultDataAccessException e) {
-        return ResponseEntity.ok(200);
+    public ResponseEntity<?> deleteMessage(@PathVariable int messageId) {
+    boolean deleted = messageService.deleteMessage(messageId);
+    if (deleted) {
+        // return if deleted
+        return ResponseEntity.ok(1); 
+    } else {
+        // return if never existed
+        return ResponseEntity.ok().build(); 
     }
 }
 

@@ -26,6 +26,8 @@ public class MessageService {
 
 
 
+
+
     // create a new message method
     public Message addMessage(Message mess) {
         // get message text
@@ -55,6 +57,8 @@ public class MessageService {
     }
 
 
+
+
     // get message by id if it exists
     public Message getMessageById(Integer id){
         // use optional in case message is empty
@@ -69,12 +73,16 @@ public class MessageService {
 
 
 
-
-    public void deleteMessage(Integer id) {
-    if (!messageRepository.existsById(id)) {
-        throw new EmptyResultDataAccessException("Message not found", 1);
+    // delete message by id
+    public boolean deleteMessage(Integer id) {
+        // check if message exists
+        if (!messageRepository.existsById(id)) {
+            return false; 
+        }
+        // if it exists, delete it
+        messageRepository.deleteById(id);
+        return true; 
     }
-    messageRepository.deleteById(id);
 }
 
 
@@ -82,4 +90,4 @@ public class MessageService {
 
 
 
-}
+
