@@ -40,11 +40,26 @@ public class AccountService {
             
     // save and return the new account
     return accountRepository.save(acc);
-
     }
 
      
 
+
+    // method to verify user login
+    public Account login(String username, String password){
+        // check for correct user input
+        if (username == null || username.trim().isEmpty() || password == null || password.length() < 4) {
+            
+            throw new IllegalArgumentException("Incorrect username or password");
+            }
+
+            Optional<Account> existing = accountRepository.findByUsernameAndPassword(username, password);
+            if (existing.isEmpty()) {
+                throw new IllegalArgumentException("Incorrect username or password"); // avoid revealing which one failed
+            }
+
+            return existing.get();
+    }
 
 
 
