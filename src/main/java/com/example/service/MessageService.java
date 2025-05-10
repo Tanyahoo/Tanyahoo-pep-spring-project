@@ -1,13 +1,17 @@
 package com.example.service;
 import com.example.entity.Message;
+
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.repository.MessageRepository;
 
+
 @Service
 public class MessageService {
 
-   MessageRepository messageRepository;
+    MessageRepository messageRepository;
 
     // dependency injection via constructor
     @Autowired
@@ -22,18 +26,17 @@ public class MessageService {
         // get message text
         String msgTxt = mess.getMessageText();
         // get user id
-        int user = mess.getPostedBy();
+        Integer userId = mess.getPostedBy();
 
+        // check if user exists
+        if (userId == null || !messageRepository.existsById(userId)) {
+            throw new IllegalArgumentException("User not found!");
+        }
         // check if message is not empty or over 255 chars
         if (msgTxt == null || msgTxt.trim().isEmpty() || msgTxt.length() > 255) {
             //return null;
            throw new IllegalArgumentException("Message cannot be empty or over 255 characters long!");
          }
-        // check if user exists
-        if (user == 0) {
-            //return null;
-            throw new IllegalArgumentException("User not found!");
-        }
         // return the saved message by calling repository method
         return messageRepository.save(mess);
     }

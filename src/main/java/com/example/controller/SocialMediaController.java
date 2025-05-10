@@ -1,11 +1,11 @@
 package com.example.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import com.example.entity.Message;
 import com.example.entity.Account;
 import com.example.service.AccountService;
+import com.example.service.MessageService;
 
 
 /**
@@ -22,23 +22,26 @@ public class SocialMediaController {
     @Autowired
     AccountService accountService;
 
+    @Autowired
+    MessageService messageService;
+
 
 
 
     // mapping 'register' to create account, http post method
     @PostMapping("/register")
-        // wildcard generic to allow for account or string object 
-        private ResponseEntity<?> register(@RequestBody Account acc) {
+    // wildcard generic to allow for account or string object 
+    private ResponseEntity<?> register(@RequestBody Account acc) {
 
-            try {
+        try {
 
-            Account created = accountService.createAccount(acc);
-                return ResponseEntity.ok(created); // 200 OK with Account JSON
+        Account created = accountService.createAccount(acc);
+            return ResponseEntity.ok(created); // 200 OK with Account JSON
 
-            } catch (IllegalArgumentException e) {    
-                return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage()); // 409 Conflict
+        } catch (IllegalArgumentException e) {    
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage()); // 409 Conflict
             }
-        }
+    }
 
 
 
@@ -46,7 +49,6 @@ public class SocialMediaController {
 
     // method to map login to 
     @PostMapping("/login")
-
     private ResponseEntity<?> login(@RequestBody Account account){
 
         try {Account exists = accountService.login(account.getUsername(), account.getPassword());
@@ -54,10 +56,41 @@ public class SocialMediaController {
         
         // return 401 unauthorized
         } catch (IllegalArgumentException e) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
             } 
-
         }
+
+
+    @PostMapping("/messages")
+    private ResponseEntity<?> createMessage(@RequestBody Message mess){
+        try { Message created = messageService.addMessage(mess);
+            return ResponseEntity.ok(created);    
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 
