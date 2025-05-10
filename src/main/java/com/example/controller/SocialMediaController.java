@@ -1,7 +1,6 @@
 package com.example.controller;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +19,6 @@ import com.example.service.AccountService;
 @RestController
 public class SocialMediaController {
 
-   // @Autowired
-   // Account account;
     @Autowired
     AccountService accountService;
 
@@ -46,7 +43,7 @@ public class SocialMediaController {
 
 
 
-        
+
     // method to map login to 
     @PostMapping("/login")
 
@@ -58,7 +55,7 @@ public class SocialMediaController {
         // return 401 unauthorized
         } catch (IllegalArgumentException e) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
-            }
+            } 
 
         }
 
