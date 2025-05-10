@@ -3,7 +3,10 @@ import com.example.entity.Message;
 
 import java.util.Optional;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import com.example.repository.MessageRepository;
 
@@ -43,12 +46,36 @@ public class MessageService {
         return messageRepository.save(mess);
     }
 
-//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////
 
-    public List<Message> findAllMessages(){
+
+    // return all messages
+    public List<Message> getAllMessages(){
         return messageRepository.findAll();
-        }
+    }
 
+
+    // get message by id if it exists
+    public Message getMessageById(Integer id){
+        // use optional in case message is empty
+        Optional<Message> optionalStore = messageRepository.findById(id);
+      if(optionalStore.isPresent()){
+          return optionalStore.get();
+      }else{
+          return null;
+      }
+    }
+
+
+
+
+
+    public void deleteMessage(Integer id) {
+    if (!messageRepository.existsById(id)) {
+        throw new EmptyResultDataAccessException("Message not found", 1);
+    }
+    messageRepository.deleteById(id);
+}
 
 
 

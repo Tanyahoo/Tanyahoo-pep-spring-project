@@ -1,11 +1,16 @@
 package com.example.controller;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import com.example.entity.Message;
 import com.example.entity.Account;
 import com.example.service.AccountService;
 import com.example.service.MessageService;
+
+
 
 
 /**
@@ -30,7 +35,7 @@ public class SocialMediaController {
 
     // mapping 'register' to create account, http post method
     @PostMapping("/register")
-    // wildcard generic to allow for account or string object 
+    // wildcard generic to allow for account or unknown object
     private ResponseEntity<?> register(@RequestBody Account acc) {
 
         try {
@@ -74,6 +79,33 @@ public class SocialMediaController {
 
     }
 
+////////////////////////////////////////////
+
+
+
+
+
+    // retrieve all messages
+    @GetMapping("/messages")
+    private ResponseEntity<?> getAllMessages(){
+        List<Message> messages = messageService.getAllMessages();
+        return ResponseEntity.ok(messages);
+    }
+
+
+
+    
+    // retrieve message by its id
+    @GetMapping("messages/{messageId}")
+    private ResponseEntity<?> getMessageById(@PathVariable Integer messageId){
+        try {
+            Message message = messageService.getMessageById(messageId);
+            return ResponseEntity.ok(message);
+        } catch (Exception e) {
+            return ResponseEntity.status(200).body("Message not found.");
+        }
+
+    }
 
 
 
@@ -83,6 +115,17 @@ public class SocialMediaController {
 
 
 
+
+    // delete message with message id
+    @DeleteMapping("/messages/{messageId}")
+    private ResponseEntity<?> deleteMessage(@PathVariable int messageId) {
+    try {
+        messageService.deleteMessage(messageId);
+        return ResponseEntity.ok(200); 
+    } catch (EmptyResultDataAccessException e) {
+        return ResponseEntity.ok(200);
+    }
+}
 
 
 
