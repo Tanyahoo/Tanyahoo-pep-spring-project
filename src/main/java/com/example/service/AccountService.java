@@ -30,17 +30,15 @@ public class AccountService {
 
        // check conditions for password and username
        if (user == null || user.trim().isEmpty() || pass == null || pass.length() < 4) {
-            return null;
-            //throw new InvalidAccountException("Invalid username or password");// write in exception class;
+            throw new IllegalArgumentException("Invalid username or password");// maybe write bespoke exception class?
         }
-       // Use Optional to check for existing username
+       // use Optional to check for existing username
         Optional<Account> existing = accountRepository.findAccountByUsername(user);
         if (existing.isPresent()) {
-            //throw new UsernameAlreadyExistsException("Username already in use"); // write in exception class
-            return null;
+            throw new IllegalArgumentException("Username already in use"); // maybe write bespoke exception class
     }
             
-    // Save and return the new account
+    // save and return the new account
     return accountRepository.save(acc);
 
     }
