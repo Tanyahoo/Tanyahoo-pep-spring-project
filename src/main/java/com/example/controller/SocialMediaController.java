@@ -1,6 +1,11 @@
 package com.example.controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.example.entity.Account;
+import com.example.service.AccountService;
 
 
 /**
@@ -13,5 +18,14 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 public class SocialMediaController {
+
+    @Autowired
+    AccountService accountService;
+
+    @PostMapping("/register")
+    public ResponseEntity<Account> registerAccount(@RequestBody Account account) {
+       
+
+    }
 
 }

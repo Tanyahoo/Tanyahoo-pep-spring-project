@@ -12,7 +12,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer>{
 // to do: write bespoke crud methods maybe using @Query?
 
 
-// method to find account with a username and password as params
+// method to find account with a username and password as params, returns an Optional to avoid null pointer
 Optional<Account> findByUsernameAndPassword(String username, String password);
 
 Optional<Account> findAccountByUsername(String user);

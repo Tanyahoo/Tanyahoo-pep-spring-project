@@ -20,7 +20,10 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    // create a new user account
+
+
+
+    // create a new user account method
     public Account createAccount(Account acc){
         String user = acc.getUsername();
         String pass = acc.getPassword();
