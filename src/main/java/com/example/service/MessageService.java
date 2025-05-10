@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.repository.MessageRepository;
 
+import java.util.List;
+
 
 @Service
 public class MessageService {
@@ -40,6 +42,12 @@ public class MessageService {
         // return the saved message by calling repository method
         return messageRepository.save(mess);
     }
+
+//////////////////////////////////////////////////////////////////////////
+
+    public List<Message> findAllMessages(){
+        return messageRepository.findAll();
+        }
 
 
 
