@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.repository.MessageRepository;
+import com.example.repository.AccountRepository;
 
 import java.util.List;
 
@@ -91,7 +92,7 @@ public class MessageService {
     public Message updateMessage(Integer messageId, String messageText){
         // check conditions of message text
         if (messageText == null || messageText.trim().isEmpty() || messageText.length() > 255) {
-            throw new IllegalArgumentException("Message cannot empty or over 255 characters long!");
+            return null;
         }
         Optional<Message> mess = messageRepository.findById(messageId);
         if (mess.isPresent()){
@@ -104,6 +105,11 @@ public class MessageService {
     }
 
 
+    // method to retrieve all message by user id
+    public List<Message> getAllMessagesByUserId(Integer accountId) {
+        return messageRepository.findMessagesByPostedBy(accountId);
+    }
+    
 
 
 

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.*;
 
 import com.example.entity.Account;
 
+
 // it doesn't need to be marked as @Component or @Repository as this is inherited from the JPARepository
 public interface AccountRepository extends JpaRepository<Account, Integer>{
 
@@ -16,7 +17,6 @@ public interface AccountRepository extends JpaRepository<Account, Integer>{
 Optional<Account> findByUsernameAndPassword(String username, String password);
 
 Optional<Account> findAccountByUsername(String user);
-
 
 
 

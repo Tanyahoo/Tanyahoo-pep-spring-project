@@ -125,6 +125,8 @@ public class SocialMediaController {
     }
 
 
+
+
    // needs work
     @PatchMapping("/messages/{messageId}")
     public ResponseEntity<?> updateMessage(@PathVariable int messageId, @RequestBody String messageText) {
@@ -132,12 +134,19 @@ public class SocialMediaController {
         if (updatedMessage!=null) {
             return ResponseEntity.ok(1); 
         } else {
-            return ResponseEntity.status(400).build();
-            
+            return ResponseEntity.status(400).build();     
         }
     }
     
 
+    
+
+    // retrieve list of messages, empty or full
+    @GetMapping("/accounts/{accountId}/messages")
+    public ResponseEntity<List<Message>> getMessagesByUser(@PathVariable Integer accountId) {
+    List<Message> messages = messageService.getAllMessagesByUserId(accountId);
+    return ResponseEntity.ok(messages);  
+}
 
     
 

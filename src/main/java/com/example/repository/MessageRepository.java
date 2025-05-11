@@ -1,4 +1,5 @@
 package com.example.repository;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.*;
@@ -9,7 +10,10 @@ import com.example.entity.Message;
 public interface MessageRepository extends JpaRepository<Message, Integer>{
 
 // to do: write bespoke crud methods maybe using @Query?
-//Optional<Message> findMessageByMesId(Integer postedBy);
+   
+List<Message> findMessagesByPostedBy(Integer postedBy);
+
+
 
 
 
