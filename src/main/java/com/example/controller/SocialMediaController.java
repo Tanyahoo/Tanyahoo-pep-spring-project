@@ -130,6 +130,10 @@ public class SocialMediaController {
    // needs work
     @PatchMapping("/messages/{messageId}")
     public ResponseEntity<?> updateMessage(@PathVariable int messageId, @RequestBody String messageText) {
+        if (messageText == null || messageText.trim().isEmpty() || messageText.length() > 255) {
+            return ResponseEntity.badRequest().body("Invalid message text.");
+        }
+
         Message updatedMessage = messageService.updateMessage(messageId, messageText);
         if (updatedMessage!=null) {
             return ResponseEntity.ok(1); 
@@ -139,7 +143,7 @@ public class SocialMediaController {
     }
     
 
-    
+
 
     // retrieve list of messages, empty or full
     @GetMapping("/accounts/{accountId}/messages")

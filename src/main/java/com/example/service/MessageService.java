@@ -48,7 +48,7 @@ public class MessageService {
         return messageRepository.save(mess);
     }
 
-//////////////////////////////////////
+    
 
 
     // return all messages
@@ -88,42 +88,29 @@ public class MessageService {
 
 
 
-    // needs attention
+    // update message with new text
     public Message updateMessage(Integer messageId, String messageText){
         // check conditions of message text
         if (messageText == null || messageText.trim().isEmpty() || messageText.length() > 255) {
             return null;
         }
+        // find the message via id
         Optional<Message> mess = messageRepository.findById(messageId);
-        if (mess.isPresent()){
+        if (!mess.isPresent()){
             Message message = mess.get();
             message.setMessageText(messageText);
-           return messageRepository.save(message);
-
+            return messageRepository.save(message);
         }
-        return null;
+       return null;   
     }
+
+
 
 
     // method to retrieve all message by user id
     public List<Message> getAllMessagesByUserId(Integer accountId) {
         return messageRepository.findMessagesByPostedBy(accountId);
     }
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 
