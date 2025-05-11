@@ -75,7 +75,7 @@ public class MessageService {
 
     // delete message by id
     public boolean deleteMessage(Integer id) {
-        // check if message exists
+        // check if message doesn't exist
         if (!messageRepository.existsById(id)) {
             return false; 
         }
@@ -83,6 +83,41 @@ public class MessageService {
         messageRepository.deleteById(id);
         return true; 
     }
+
+
+    public Message updateMessage(Integer messageId, String messageText){
+        // check conditions of message text
+        if (messageText == null || messageText.isBlank() || messageText.length() > 255) {
+            return null; // Return null or throw an exception if the text is invalid
+        }
+
+
+        Optional<Message> mess = messageRepository.findById(messageId);
+        if (mess.isPresent()){
+            Message message = mess.get();
+            message.setMessageText(messageText);
+           return messageRepository.save(message);
+
+        }
+        return null;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 
