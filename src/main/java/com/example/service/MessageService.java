@@ -6,7 +6,6 @@ import java.util.Optional;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import com.example.repository.MessageRepository;
 
@@ -85,13 +84,15 @@ public class MessageService {
     }
 
 
+
+
+
+    // needs attention
     public Message updateMessage(Integer messageId, String messageText){
         // check conditions of message text
-        if (messageText == null || messageText.isBlank() || messageText.length() > 255) {
-            return null; // Return null or throw an exception if the text is invalid
+        if (messageText == null || messageText.trim().isEmpty() || messageText.length() > 255) {
+            throw new IllegalArgumentException("Message cannot empty or over 255 characters long!");
         }
-
-
         Optional<Message> mess = messageRepository.findById(messageId);
         if (mess.isPresent()){
             Message message = mess.get();
