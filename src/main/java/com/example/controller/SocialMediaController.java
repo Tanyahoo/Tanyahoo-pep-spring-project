@@ -124,16 +124,29 @@ public class SocialMediaController {
         }
     }
 
-
-
-
-   // needs work
+    // update message text in message
     @PatchMapping("/messages/{messageId}")
     public ResponseEntity<?> updateMessage(@PathVariable int messageId, @RequestBody String messageText) {
-        if (messageText == null || messageText.trim().isEmpty() || messageText.length() > 255) {
-            return ResponseEntity.badRequest().body("Invalid message text.");
+    try {
+        Message updatedMessage = messageService.updateMessage(messageId, messageText);
+        if (updatedMessage != null) {
+            return ResponseEntity.ok(1); 
+        } else {
+            return ResponseEntity.badRequest().body("Invalid message text or message not found.");
         }
+    } catch (Exception e) {
+        return ResponseEntity.badRequest().body("Invalid request: " + e.getMessage());
+    }
+}
 
+
+  /*  // needs work
+    @PatchMapping("/messages/{messageId}")
+    public ResponseEntity<?> updateMessage(@PathVariable int messageId, @RequestBody String messageText) {
+        // repeating conditions for text string AGAIN...
+        if (messageText == null || messageText.trim().isEmpty() || messageText.length() > 255) {
+          return ResponseEntity.status(400).body("Invalid message text.");
+        }
         Message updatedMessage = messageService.updateMessage(messageId, messageText);
         if (updatedMessage!=null) {
             return ResponseEntity.ok(1); 
@@ -141,7 +154,7 @@ public class SocialMediaController {
             return ResponseEntity.status(400).build();     
         }
     }
-    
+    */
 
 
 

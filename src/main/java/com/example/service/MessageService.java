@@ -48,7 +48,7 @@ public class MessageService {
         return messageRepository.save(mess);
     }
 
-    
+
 
 
     // return all messages
@@ -88,7 +88,7 @@ public class MessageService {
 
 
 
-    // update message with new text
+    // method to update message with new text
     public Message updateMessage(Integer messageId, String messageText){
         // check conditions of message text
         if (messageText == null || messageText.trim().isEmpty() || messageText.length() > 255) {
