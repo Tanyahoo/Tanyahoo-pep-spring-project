@@ -9,7 +9,7 @@ import com.example.entity.Account;
 import com.example.service.AccountService;
 import com.example.service.MessageService;
 
-// 
+
 @RestController
 public class SocialMediaController {
 
