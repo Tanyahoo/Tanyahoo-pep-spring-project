@@ -1,22 +1,18 @@
 package com.example.service;
 import com.example.entity.Message;
-
-import java.util.Optional;
-
-
-
+import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.repository.MessageRepository;
-import com.example.repository.AccountRepository;
 
-import java.util.List;
 
 
 @Service
 public class MessageService {
 
+    
     MessageRepository messageRepository;
+
 
     // dependency injection via constructor
     @Autowired
@@ -26,9 +22,10 @@ public class MessageService {
 
 
 
+    
 
 
-    // create a new message method
+    // method to create new message
     public Message addMessage(Message mess) {
         // get message text
         String msgTxt = mess.getMessageText();
@@ -63,9 +60,9 @@ public class MessageService {
     public Message getMessageById(Integer id){
         // use optional in case message is empty
         Optional<Message> optionalStore = messageRepository.findById(id);
-      if(optionalStore.isPresent()){
+        if(optionalStore.isPresent()){
           return optionalStore.get();
-      }else{
+        }else{
           return null;
       }
     }
@@ -87,22 +84,28 @@ public class MessageService {
 
 
 
-
+     
     // method to update message with new text
-    public Message updateMessage(Integer messageId, String messageText){
-        // check conditions of message text
-        if (messageText == null || messageText.trim().isEmpty() || messageText.length() > 255) {
-            return null;
+   public Message updateMessage(Integer messageId, Message msg) {
+        // get text from message
+        String text = msg.getMessageText();
+        // check conditions of text
+        if (text == null || text.trim().isEmpty() || text.length() > 255) {
+            throw new IllegalArgumentException("Text conditions not met. Cannot be empty or over 255 characters");
         }
-        // find the message via id
-        Optional<Message> mess = messageRepository.findById(messageId);
-        if (!mess.isPresent()){
-            Message message = mess.get();
-            message.setMessageText(messageText);
-            return messageRepository.save(message);
+        // find the existing message in db by id
+        Optional<Message> optionalMessage = messageRepository.findById(messageId);
+        if (optionalMessage.isPresent()) {
+            Message message = optionalMessage.get();
+            // update message text
+            message.setMessageText(text);
+            // persist it
+            return messageRepository.save(message); 
         }
-       return null;   
+        return null; 
     }
+
+
 
 
 

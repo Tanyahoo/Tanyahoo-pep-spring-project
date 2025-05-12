@@ -1,8 +1,6 @@
 package com.example.repository;
 import java.util.*;
-
 import org.springframework.data.jpa.repository.*;
-
 import com.example.entity.Account;
 
 
@@ -10,16 +8,13 @@ import com.example.entity.Account;
 public interface AccountRepository extends JpaRepository<Account, Integer>{
 
 
-// to do: write bespoke crud methods maybe using @Query?
+// to do: write bespoke crud methods
 
 
 // method to find account with a username and password as params, returns an Optional to avoid null pointer
 Optional<Account> findByUsernameAndPassword(String username, String password);
 
 Optional<Account> findAccountByUsername(String user);
-
-
-
 
 
 
