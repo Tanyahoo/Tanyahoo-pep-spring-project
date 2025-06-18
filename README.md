@@ -103,4 +103,4 @@ As a user, I should be able to submit a GET request on the endpoint GET localhos
 
 - The project was created leveraging the spring framework, including dependency injection, autowire functionality and/or Spring annotations.
 
-# Good luck!
+## ENJOY!
